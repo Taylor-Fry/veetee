@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Taylor and Vaani</title>
+</head>
+<body>
+<div class="container">      
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>
+        <div class="row">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4">Enter text and press enter
+<div><input id=input placeholder=you-chat-here /></div></div>
+  <div class="col-sm-4"></div>
+</div>
+</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+        <div class="row">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4">
+<div id=box></div>
+</div>
+  <div class="col-sm-4"></div>
+</div>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+
+
+
+<script src=http://cdn.pubnub.com/pubnub.min.js></script>
+<script>(function(){
+var pubnub = PUBNUB.init({publish_key:'pub-c-e0487d90-21ae-4e5a-91cc-54ef8151e795',subscribe_key:'sub-c-dd9dae3c-8634-11e7-ac3a-f2b7c362e666',ssl:true});
+var box = PUBNUB.$('box'), input = PUBNUB.$('input'), channel = 'chat';
+pubnub.subscribe({
+    channel  : channel,
+    callback : function(text) { box.innerHTML = (''+text).replace( /[<>]/g, '' ) + '<br>' + box.innerHTML }
+});
+PUBNUB.bind( 'keyup', input, function(e) {
+    (e.keyCode || e.charCode) === 13 && pubnub.publish({
+        channel : channel, message : input.value, x : (input.value='')
+    })
+} )
+pubnub.publish({ channel : 'chat', message : "hello!" })
+pubnub.subscribe({ channel : 'chat', message : fun })
+pubnub.subscribe({
+  channel: chatChannel,
+  message: handleMessage, // Our global handle message function
+});
+  
+})()</script>
+</body>
+</html>
